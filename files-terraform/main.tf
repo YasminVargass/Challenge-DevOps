@@ -18,7 +18,6 @@ terraform {
 #define qual o provider
 provider "azurerm" {
   features {}
-
 }
 
 # o que é /     qual tipo é       /     nome
