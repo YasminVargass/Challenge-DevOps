@@ -1,5 +1,4 @@
 # Ignorar arquivos de variáveis com credenciais sensíveis
-variables.tf
 *.tfstate
 *.tfstate.*
 .terraform/

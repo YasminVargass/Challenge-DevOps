@@ -24,7 +24,7 @@ provider "azurerm" {
 # o que é /     qual tipo é       /     nome
 resource "azurerm_resource_group" "challenge_rg_devops" {
   name     = "challenge_rg"
-  location = var.resource_location
+  location = "centralus"
 }
 
 
