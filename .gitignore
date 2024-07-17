@@ -1,0 +1,9 @@
+# Ignorar arquivos de variáveis com credenciais sensíveis
+variables.tf
+*.tfstate
+*.tfstate.*
+.terraform/
+*.tfstate.backup
+terraform.tfvars
+terraform.tfstate.d/
+*.lock.hcl
