@@ -6,6 +6,7 @@ terraform {
     container_name = "challenge-container"
     key = "terraform.tfstate"
   }
+  
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
