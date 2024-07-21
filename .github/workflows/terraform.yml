@@ -37,6 +37,7 @@ jobs:
 
     - name: Check if Resource Group exists
       id: rg_exists
+      continue-on-error: true
       run: |
         az group show --name challenge_rg --output json > rg.json
         if [ -s rg.json ]; then
@@ -47,6 +48,7 @@ jobs:
     
     - name: Destroy existing Resource Group if it exists
       if: env.exists == 'true'
+      continue-on-error: true
       run: |
         terraform import azurerm_resource_group.challenge_rg_devops /subscriptions/${{ secrets.AZ_SUBSCRIPTION_ID }}/resourceGroups/challenge_rg
         terraform destroy -target=azurerm_resource_group.challenge_rg_devops -auto-approve
