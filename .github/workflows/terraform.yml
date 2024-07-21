@@ -53,7 +53,6 @@ jobs:
         terraform destroy -target=azurerm_resource_group.challenge_rg_devops -auto-approve
       working-directory: ./files-terraform
     
-
     - name: Terraform Validate
       run: terraform validate
       working-directory: ./files-terraform
