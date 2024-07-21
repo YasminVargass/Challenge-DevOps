@@ -35,6 +35,24 @@ jobs:
       run: terraform init
       working-directory: ./files-terraform
 
+    - name: Check if Resource Group exists
+      id: rg_exists
+      run: |
+        az group show --name challenge_rg --output json > rg.json
+        if [ -s rg.json ]; then
+          echo "exists=true" >> $GITHUB_ENV
+        else
+          echo "exists=false" >> $GITHUB_ENV
+        fi
+    
+    - name: Destroy existing Resource Group if it exists
+      if: env.exists == 'true'
+      run: |
+        terraform import azurerm_resource_group.challenge_rg_devops /subscriptions/${{ secrets.AZ_SUBSCRIPTION_ID }}/resourceGroups/challenge_rg
+        terraform destroy -target=azurerm_resource_group.challenge_rg_devops -auto-approve
+      working-directory: ./files-terraform
+    
+
     - name: Terraform Validate
       run: terraform validate
       working-directory: ./files-terraform
