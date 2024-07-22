@@ -1,4 +1,5 @@
 # Azure Provider source and version being used
+
 terraform {
   backend "azurerm" {
     resource_group_name = "challenge_backend_rg"
