@@ -1,0 +1,70 @@
+name: Node.js CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+permissions:
+  pull-requests: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18'
+    
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run ESLint
+      run: npx eslint . --format json --output-file eslint-report-artifact.json
+    
+    - name: Upload ESLint report Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: eslint-report-artifact
+        path: eslint-report-artifact.json
+       
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@v2.2.0
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      with:
+        args: >
+            -Dsonar.organization=yasminvargass
+            -Dsonar.projectKey=YasminVargass_NodeApp-CI
+            -X
+            -Dsonar.sources=.
+
+    - name: Login to ACR
+      uses: azure/docker-login@v1
+      with:
+        login-server: ${{ secrets.ACR_LOGIN_SERVER }}
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }}
+
+    - name: Build Docker image
+      run: docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/node-app-welcome:latest .
+    
+    - name: Save Docker image as tar
+      run: docker save ${{ secrets.ACR_LOGIN_SERVER }}/node-app-welcome:latest -o node-app-welcome.tar
+    
+    - name: Upload Docker image tar Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: node-app-welcome-image
+        path: node-app-welcome.tar
+
+    - name: Push Docker image
+      run: docker push ${{ secrets.ACR_LOGIN_SERVER }}/node-app-welcome:latest
+  

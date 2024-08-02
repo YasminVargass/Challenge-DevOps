@@ -1,0 +1,22 @@
+{
+  "name": "reskilling",
+  "version": "1.0.1",
+  "description": "test in live",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "linter": "eslint src"
+  },
+  "author": "Yasmin",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.7.0",
+    "eslint": "^9.7.0",
+    "globals": "^15.8.0",
+    "nodemon": "^3.1.4"
+  }
+}
