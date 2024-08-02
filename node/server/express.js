@@ -7,7 +7,7 @@ app.use(express.json());
 app.set("view engine", "ejs");
 app.set("views", "src/views");
 
-app.get("/views/home", async (req, res) => {
+app.get("/index", async (req, res) => {
     res.render("index");
   });
 
