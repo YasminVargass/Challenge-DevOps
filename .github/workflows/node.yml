@@ -1,12 +1,10 @@
 name: Node.js CI
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    workflow_run:
+      workflows: ["Terraform Infrastructure"]
+      types:
+        - completed
 permissions:
   pull-requests: read
 
@@ -82,7 +80,7 @@ jobs:
             creds: ${{ secrets.AZURE_CREDENTIALS }}
     
         - name: Set up Kubernetes CLI
-          uses: azure/setup-kubectl@v1
+          uses: azure/setup-kubectl@v3
           with:
             version: 'latest'
     
@@ -91,5 +89,5 @@ jobs:
     
         - name: Deploy to AKS
           run: |
-            kubectl apply -f manifests/deployment.yaml
-            kubectl apply -f manifests/service.yaml
+            kubectl apply -f manifests/deployment.yml
+            kubectl apply -f manifests/service.yml
