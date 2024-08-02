@@ -67,4 +67,29 @@ jobs:
 
     - name: Push Docker image
       run: docker push ${{ secrets.ACR_LOGIN_SERVER }}/node-app-welcome:latest
-  
+     
+  deploy:
+        needs: build
+        runs-on: ubuntu-latest
+    
+        steps:
+        - name: Checkout repository
+          uses: actions/checkout@v2
+    
+        - name: Azure Login
+          uses: azure/login@v1
+          with:
+            creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+        - name: Set up Kubernetes CLI
+          uses: azure/setup-kubectl@v1
+          with:
+            version: 'latest'
+    
+        - name: Get AKS credentials
+          run: az aks get-credentials --resource-group challenge_rg --name challenge_cluster
+    
+        - name: Deploy to AKS
+          run: |
+            kubectl apply -f manifests/deployment.yaml
+            kubectl apply -f manifests/service.yaml
