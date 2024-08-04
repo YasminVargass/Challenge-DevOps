@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: node-app
-        imagePullPolicy: Never
         image: devopschallenge.azurecr.io/node-app-welcome:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000
