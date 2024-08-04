@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: node-app
-        image: ${{ secrets.ACR_LOGIN_SERVER }}/node-app-welcome:latest
+        image: devopschallenge.azurecr.io/node-app-welcome:latest
         ports:
         - containerPort: 3000
