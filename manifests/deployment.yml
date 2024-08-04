@@ -16,4 +16,4 @@ spec:
       - name: node-app
         image: ${{ secrets.ACR_LOGIN_SERVER }}/node-app-welcome:latest
         ports:
-        - containerPort: 80
+        - containerPort: 3000
