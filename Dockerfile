@@ -11,10 +11,10 @@ COPY package*.json ./
 RUN npm install
 
 # Copie o restante dos arquivos da aplicação
-COPY . .
+COPY node/ .
 
 # Exponha a porta que a aplicação irá rodar
-EXPOSE 3000
+EXPOSE 8080
 
 # Defina o comando de inicialização da aplicação
 CMD ["node", "node/src/index.js"]
