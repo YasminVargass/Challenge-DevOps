@@ -17,4 +17,4 @@ COPY node/ .
 EXPOSE 8080
 
 # Defina o comando de inicialização da aplicação
-CMD ["node", "node/src/index.js"]
+CMD ["node", "src/index.js"]
