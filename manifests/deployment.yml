@@ -18,6 +18,6 @@ spec:
         image: devopschallenge.azurecr.io/node-app-welcome:latest
         imagePullPolicy: Always
         ports:
-        - containerPort: 3000
+        - containerPort: 8080
       imagePullSecrets:
       - name: acr-secret
