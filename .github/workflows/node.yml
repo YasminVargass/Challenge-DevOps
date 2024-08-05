@@ -87,7 +87,19 @@ jobs:
         - name: Get AKS credentials
           run: az aks get-credentials --resource-group challenge_rg --name challenge_cluster
     
+        - name: Create namespace
+          run: kubectl create namespace dev || true
+    
+        - name: Create ACR secret
+          run: |
+            kubectl create secret docker-registry acr-secret \
+              --docker-server=${{ secrets.ACR_LOGIN_SERVER }} \
+              --docker-username=${{ secrets.ACR_USERNAME }} \
+              --docker-password=${{ secrets.ACR_PASSWORD }} \
+              --docker-email=${{ secrets.ACR_EMAIL }} \
+              --namespace=dev
+    
         - name: Deploy to AKS
           run: |
-            kubectl apply -f manifests/deployment.yml
-            kubectl apply -f manifests/service.yml
+            kubectl apply -f manifests/deployment.yml --namespace dev
+            kubectl apply -f manifests/service.yml --namespace dev
