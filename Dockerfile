@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 3000
 
 # Defina o comando de inicialização da aplicação
-CMD ["node", "src/index.js"]
+CMD ["node", "node/src/index.js"]
