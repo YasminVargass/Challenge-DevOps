@@ -21,23 +21,21 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: '18'
-        
+    
     - name: Install dependencies
       run: npm install
       working-directory: node
 
     - name: Run ESLint
       run: npx eslint . --format json --output-file eslint-report-artifact.json
-      working-directory: node    
+      working-directory: node
+    
     - name: Upload ESLint report Artifact
       uses: actions/upload-artifact@v2
       with:
         name: eslint-report-artifact
         path: eslint-report-artifact.json
-        
-    - name: List files in current directory
-      run: ls -la   
-      
+       
     - name: SonarCloud Scan
       uses: SonarSource/sonarcloud-github-action@v2.2.0
       env:
@@ -55,10 +53,10 @@ jobs:
         login-server: ${{ secrets.ACR_LOGIN_SERVER }}
         username: ${{ secrets.ACR_USERNAME }}
         password: ${{ secrets.ACR_PASSWORD }}
- 
+
     - name: Build Docker image
       run: docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/node-app-welcome:latest .
-      
+    
     - name: Save Docker image as tar
       run: docker save ${{ secrets.ACR_LOGIN_SERVER }}/node-app-welcome:latest -o node-app-welcome.tar
     
@@ -108,3 +106,4 @@ jobs:
           run: |
             kubectl apply -f manifests/deployment.yml --namespace dev
             kubectl apply -f manifests/service.yml --namespace dev
+            
