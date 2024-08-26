@@ -100,4 +100,3 @@ jobs:
           run: |
             kubectl apply -f manifests/deployment.yml --namespace dev
             kubectl apply -f manifests/service.yml --namespace dev
-            
