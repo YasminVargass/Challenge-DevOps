@@ -68,7 +68,7 @@ jobs:
       run: docker push ${{ secrets.ACR_LOGIN_SERVER }}/node-app-welcome:latest
      
   deploy:
-        needs: build
+        needs: config
         runs-on: ubuntu-latest
     
         steps:
