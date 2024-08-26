@@ -20,6 +20,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
     - name: Run ESLint
       run: npx eslint . --format json --output-file eslint-report-artifact.json
       working-directory: node
