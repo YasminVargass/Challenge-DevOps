@@ -9,18 +9,26 @@ permissions:
   pull-requests: read
 
 jobs:
-  build:
+  setup:
     uses: YasminVargass/Reusable-Workflow-Template/.github/workflows/node-setup.yml@main
-    with:
-      node-version: '18'
-      working-directory: node
 
-  config:
-    needs: build
+  build:
+    needs: setup
     runs-on: ubuntu-latest
 
     steps:
-    
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18'
+        
+    - name: Install dependencies
+      run: npm install
+      working-directory: node
+
+    - name: Run ESLint
+      run: npx eslint . --format json --output-file eslint-report-artifact.json
+      working-directory: node    
     - name: Upload ESLint report Artifact
       uses: actions/upload-artifact@v2
       with:
@@ -64,7 +72,7 @@ jobs:
       run: docker push ${{ secrets.ACR_LOGIN_SERVER }}/node-app-welcome:latest
      
   deploy:
-        needs: config
+        needs: build
         runs-on: ubuntu-latest
     
         steps:
