@@ -13,14 +13,15 @@ jobs:
     uses: YasminVargass/Reusable-Workflow-Template/.github/workflows/node-setup.yml@main
     with:
       node-version: '18'
- 
+
   build:
+    needs: setup
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-
+    
     - name: Install dependencies
       run: npm install
       working-directory: node
