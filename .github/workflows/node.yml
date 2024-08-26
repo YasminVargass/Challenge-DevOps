@@ -26,7 +26,10 @@ jobs:
       with:
         name: eslint-report-artifact
         path: eslint-report-artifact.json
-       
+        
+    - name: List files in current directory
+      run: ls -la   
+      
     - name: SonarCloud Scan
       uses: SonarSource/sonarcloud-github-action@v2.2.0
       env:
@@ -47,11 +50,9 @@ jobs:
  
     - name: Build Docker image
       run: docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/node-app-welcome:latest .
-      working-directory: /home/runner/work/Challenge-DevOps/Challenge-DevOps
-
+      
     - name: Save Docker image as tar
       run: docker save ${{ secrets.ACR_LOGIN_SERVER }}/node-app-welcome:latest -o node-app-welcome.tar
-      working-directory: /home/runner/work/Challenge-DevOps/Challenge-DevOps
     
     - name: Upload Docker image tar Artifact
       uses: actions/upload-artifact@v2
