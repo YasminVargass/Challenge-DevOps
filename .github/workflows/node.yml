@@ -44,15 +44,14 @@ jobs:
         login-server: ${{ secrets.ACR_LOGIN_SERVER }}
         username: ${{ secrets.ACR_USERNAME }}
         password: ${{ secrets.ACR_PASSWORD }}
-       
-    - name: Print working directory
-      run: pwd      
-
+ 
     - name: Build Docker image
       run: docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/node-app-welcome:latest .
-    
+      working-directory: /home/runner/work/Challenge-DevOps/Challenge-DevOps
+
     - name: Save Docker image as tar
       run: docker save ${{ secrets.ACR_LOGIN_SERVER }}/node-app-welcome:latest -o node-app-welcome.tar
+      working-directory: /home/runner/work/Challenge-DevOps/Challenge-DevOps
     
     - name: Upload Docker image tar Artifact
       uses: actions/upload-artifact@v2
