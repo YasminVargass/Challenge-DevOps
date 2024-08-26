@@ -13,7 +13,7 @@ jobs:
     uses: YasminVargass/Reusable-Workflow-Template/.github/workflows/node-setup.yml@main
     with:
       node-version: '18'
-      working-directory: 'node'
+      working-directory: node
 
   config:
     needs: build
