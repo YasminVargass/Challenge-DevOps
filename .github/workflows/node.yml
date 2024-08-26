@@ -10,15 +10,16 @@ permissions:
 
 jobs:
   build:
+    uses: YasminVargass/Reusable-Workflow-Template/.github/workflows/node-setup.yml@main
+    with:
+      node-version: '18'
+      working-directory: 'node'
+
+  config:
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-
-    - name: Setup Node.js and Install Dependencies
-      uses: YasminVargass/Reusable-Workflow-Template/.github/workflows/node-setup.yml@main
-
     - name: Run ESLint
       run: npx eslint . --format json --output-file eslint-report-artifact.json
       working-directory: node
